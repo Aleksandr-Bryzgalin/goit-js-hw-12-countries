@@ -5,9 +5,12 @@ import fetchApi from './js/fetchCountries.js';
 import cardTpl from './templates/countrie-card-markup.hbs';
 import listTpl from './templates/countrie-list-markup.hbs';
 
+
+// Проблема с Pnotify
+
 // import { alert, error } from '../node_modules/@pnotify/core/dist/PNotify.js';
-import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
-import { alert, notice, info, success, error } from '@pnotify/core';
+// import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
+// import { alert, notice, info, success, error } from '@pnotify/core';
 
 
 
@@ -33,7 +36,11 @@ function onSearch(e) {
    
     fetchApi(searchInput)
         .then(renderResult)
-        .catch(myError)
+        .catch((error) => {
+            return error = alert('Oh No! Something terrible happened.');
+        })
+    
+        // Проблема с Pnotify
     
         // .catch(error => console.log(error))
         // .finally(() => clearSearch());
@@ -48,20 +55,26 @@ function renderResult(countries) {
     } else if (countries.length > 1 && countries.length <= 10) {
         clearSearch();
         renderCountrysList(countries);
-    } else if (countries.length > 10) {
-         error({
-             title: 'Oh! To many matches found!',
-             text: 'Clarify your request!'
-         });    
+     } else if (countries.length > 10) {
+         return alert('Oh! To many matches found! Clarify your request!')
+         
+         // Проблема с Pnotify
+
+        //  error({
+        //      title: 'Oh! To many matches found!',
+        //      text: 'Clarify your request!'
+        //  });    
     }
 }
 
-function myError() {
-    error({
-        title: 'Oh No!',
-        text: 'Something terrible happened.'
-    });
-}
+// Проблема с Pnotify
+
+// function myError() {
+//     error({
+//         title: 'Oh No!',
+//         text: 'Something terrible happened.'
+//     });
+// }
 
 function renderCountryCard(country) {
     const markup = cardTpl(country)
